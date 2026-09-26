@@ -15,6 +15,7 @@ click==8.3.3
 colorama==0.4.6
 discord.py==2.7.1
 distro==1.9.0
+et_xmlfile==2.0.0
 fastapi==0.136.1
 filelock==3.29.0
 frozenlist==1.8.0
@@ -43,6 +44,7 @@ multidict==6.7.1
 narwhals==2.26.0
 numpy==2.4.4
 openai==2.36.0
+openpyxl==3.1.5
 orjson==3.11.9
 packaging==26.2
 pandas==3.0.2
