@@ -1,8 +1,12 @@
 import pandas as pd
 import streamlit as st
 
-from cashflow import calculate_cash_flow
+from cashflow import (
+    calculate_cash_flow,
+    calculate_expenses_by_category,
+)
 from translations import TRANSLATIONS
+
 
 
 st.set_page_config(
@@ -94,8 +98,18 @@ if uploaded_file is not None:
                    f"${net_cash_flow:,.0f}",
                )
 
+            expenses_by_category = calculate_expenses_by_category(df)
+
+            if language == "es":
+              st.subheader("Gastos por categoría")
+            else:
+              st.subheader("Expenses by category")
+
+            st.dataframe(expenses_by_category)               
+ 
     except Exception as error:
         st.error(str(error))
 
 else:
     st.info(texts["no_file"])   
+

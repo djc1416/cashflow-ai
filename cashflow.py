@@ -18,3 +18,15 @@ def calculate_cash_flow(df):
     net_cash_flow = income - expenses
 
     return income, expenses, net_cash_flow
+
+def calculate_expenses_by_category(df):
+
+    expenses_by_category = (
+        df.loc[df["Type"] == "Expense"]
+        .groupby("Category")["Amount"]
+        .sum()
+        .sort_values(ascending=False)
+    )
+
+    return expenses_by_category    
+   
