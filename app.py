@@ -1,6 +1,7 @@
 import pandas as pd
 import streamlit as st
 
+from cashflow import calculate_cash_flow
 from translations import TRANSLATIONS
 
 
@@ -70,8 +71,18 @@ if uploaded_file is not None:
         else:
             st.success(texts["valid_data"])
 
+            income, expenses, net_cash_flow = calculate_cash_flow(df)
+
+            st.subheader("Cash Flow")
+
+            st.write(f"Income: {income:,.0f}")
+            st.write(f"Expenses: {expenses:,.0f}")
+            st.write(
+                f"Net Cash Flow: {net_cash_flow:,.0f}"
+            )
+
     except Exception as error:
         st.error(str(error))
 
 else:
-    st.info(texts["no_file"])
+    st.info(texts["no_file"])    
