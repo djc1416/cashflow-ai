@@ -73,16 +73,17 @@ if uploaded_file is not None:
 
             income, expenses, net_cash_flow = calculate_cash_flow(df)
 
-            st.subheader("Cash Flow")
 
-            st.write(f"Income: {income:,.0f}")
-            st.write(f"Expenses: {expenses:,.0f}")
+            st.subheader(texts["cash_flow"])
+
+            st.write(f"{texts['income']}: {income:,.0f}")
+            st.write(f"{texts['expenses']}: {expenses:,.0f}")
             st.write(
-                f"Net Cash Flow: {net_cash_flow:,.0f}"
+                f"{texts['net_cash_flow']}: {net_cash_flow:,.0f}"
             )
 
     except Exception as error:
         st.error(str(error))
 
 else:
-    st.info(texts["no_file"])    
+    st.info(texts["no_file"])   

@@ -15,6 +15,11 @@ TRANSLATIONS = {
         "columns_required": "Columnas requeridas",
         "missing_columns": "Faltan columnas requeridas:",
         "valid_data": "Los datos tienen un formato válido.",
+
+        "cash_flow": "Flujo de caja",
+        "income": "Ingresos",
+        "expenses": "Gastos",
+        "net_cash_flow": "Flujo de caja neto",
     },
 
     "en": {
@@ -33,5 +38,10 @@ TRANSLATIONS = {
         "columns_required": "Required columns",
         "missing_columns": "Missing required columns:",
         "valid_data": "The data has a valid format.",
+
+        "cash_flow": "Cash Flow",
+        "income": "Income",
+        "expenses": "Expenses",
+        "net_cash_flow": "Net Cash Flow",
     },
 }
