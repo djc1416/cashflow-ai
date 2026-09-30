@@ -1,5 +1,6 @@
 import pandas as pd
 import streamlit as st
+import plotly.express as px
 
 from cashflow import (
     calculate_cash_flow,
@@ -105,11 +106,27 @@ if uploaded_file is not None:
             else:
               st.subheader("Expenses by category")
 
-            st.dataframe(expenses_by_category)               
+            st.dataframe(expenses_by_category)
+
+            fig = px.bar(
+               expenses_by_category,
+               x=expenses_by_category.index,
+               y=expenses_by_category.values,
+               labels={
+                  "x": "Category",
+                  "y": "Amount",
+               },
+            )
+
+            st.plotly_chart(
+               fig,
+                use_container_width=True,
+            )                 
  
     except Exception as error:
         st.error(str(error))
 
 else:
     st.info(texts["no_file"])   
+
 
