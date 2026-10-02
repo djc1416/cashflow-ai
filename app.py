@@ -101,10 +101,8 @@ if uploaded_file is not None:
 
             expenses_by_category = calculate_expenses_by_category(df)
 
-            if language == "es":
-              st.subheader("Gastos por categoría")
-            else:
-              st.subheader("Expenses by category")
+            
+            st.subheader(texts["expenses_by_category"])
 
             st.dataframe(expenses_by_category)
 
@@ -113,8 +111,8 @@ if uploaded_file is not None:
                x=expenses_by_category.index,
                y=expenses_by_category.values,
                labels={
-                  "x": "Category",
-                  "y": "Amount",
+                  "x": texts["category"],
+                  "y": texts["amount"],
                },
             )
 

@@ -20,6 +20,10 @@ TRANSLATIONS = {
         "income": "Ingresos",
         "expenses": "Gastos",
         "net_cash_flow": "Flujo de caja neto",
+
+        "expenses_by_category": "Gastos por categoría",
+        "category": "Categoría",
+        "amount": "Monto",
     },
 
     "en": {
@@ -43,5 +47,9 @@ TRANSLATIONS = {
         "income": "Income",
         "expenses": "Expenses",
         "net_cash_flow": "Net Cash Flow",
+
+        "expenses_by_category": "Expenses by Category",
+        "category": "Category",
+        "amount": "Amount",
     },
 }
