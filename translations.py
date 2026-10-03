@@ -24,6 +24,11 @@ TRANSLATIONS = {
         "expenses_by_category": "Gastos por categoría",
         "category": "Categoría",
         "amount": "Monto",
+
+        "transaction_type": "Tipo de transacción",
+        "all": "Todos",
+        "income_filter": "Ingresos",
+        "expense_filter": "Gastos",
     },
 
     "en": {
@@ -51,5 +56,10 @@ TRANSLATIONS = {
         "expenses_by_category": "Expenses by Category",
         "category": "Category",
         "amount": "Amount",
+
+        "transaction_type": "Transaction Type",
+        "all": "All",
+        "income_filter": "Income",
+        "expense_filter": "Expenses",
     },
 }

@@ -9,7 +9,6 @@ from cashflow import (
 from translations import TRANSLATIONS
 
 
-
 st.set_page_config(
     page_title="CashFlow AI",
 )
@@ -52,6 +51,32 @@ if uploaded_file is not None:
         st.subheader(texts["data_preview"])
         st.dataframe(df)
 
+        transaction_filter = st.selectbox(
+            texts["transaction_type"],
+            options=[
+                "all",
+                "income",
+                "expense",
+            ],
+            format_func=lambda x: {
+                "all": texts["all"],
+                "income": texts["income_filter"],
+                "expense": texts["expense_filter"],
+            }[x],
+        )
+
+        filtered_df = df.copy()
+
+        if transaction_filter == "income":
+            filtered_df = filtered_df[
+                filtered_df["Type"] == "Income"
+            ]
+
+        elif transaction_filter == "expense":
+            filtered_df = filtered_df[
+                filtered_df["Type"] == "Expense"
+            ]
+
         required_columns = [
             "Date",
             "Description",
@@ -78,53 +103,55 @@ if uploaded_file is not None:
 
             income, expenses, net_cash_flow = calculate_cash_flow(df)
 
-
             st.subheader(texts["cash_flow"])
 
             col1, col2, col3 = st.columns(3)
 
             with col1:
-               st.metric(
-                   texts["income"],
-                   f"${income:,.0f}",
-               )
+                st.metric(
+                    texts["income"],
+                    f"{income:,.0f}"
+                )
+
             with col2:
-               st.metric(
-                   texts["expenses"],
-                   f"${expenses:,.0f}",
-               )
+                st.metric(
+                    texts["expenses"],
+                    f"{expenses:,.0f}"
+                )
+
             with col3:
-               st.metric(
-                   texts["net_cash_flow"],
-                   f"${net_cash_flow:,.0f}",
-               )
+                st.metric(
+                    texts["net_cash_flow"],
+                    f"{net_cash_flow:,.0f}"
+                )
 
-            expenses_by_category = calculate_expenses_by_category(df)
+            expenses_by_category = (
+                calculate_expenses_by_category(df)
+            )
 
-            
-            st.subheader(texts["expenses_by_category"])
+            st.subheader(
+                texts["expenses_by_category"]
+            )
 
             st.dataframe(expenses_by_category)
 
             fig = px.bar(
-               expenses_by_category,
-               x=expenses_by_category.index,
-               y=expenses_by_category.values,
-               labels={
-                  "x": texts["category"],
-                  "y": texts["amount"],
-               },
+                expenses_by_category,
+                x=expenses_by_category.index,
+                y=expenses_by_category.values,
+                labels={
+                    "x": texts["category"],
+                    "y": texts["amount"],
+                },
             )
 
             st.plotly_chart(
-               fig,
+                fig,
                 use_container_width=True,
-            )                 
- 
+            )
+
     except Exception as error:
         st.error(str(error))
 
 else:
-    st.info(texts["no_file"])   
-
-
+    st.info(texts["no_file"])
