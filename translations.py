@@ -29,6 +29,7 @@ TRANSLATIONS = {
         "all": "Todos",
         "income_filter": "Ingresos",
         "expense_filter": "Gastos",
+        "no_expenses_for_filter": "No hay datos para mostrar",
     },
 
     "en": {
@@ -61,5 +62,6 @@ TRANSLATIONS = {
         "all": "All",
         "income_filter": "Income",
         "expense_filter": "Expenses",
+        "no_expenses_for_filter": "No data to display",
     },
 }

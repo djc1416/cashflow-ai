@@ -1,6 +1,7 @@
+
 import pandas as pd
-import streamlit as st
 import plotly.express as px
+import streamlit as st
 
 from cashflow import (
     calculate_cash_flow,
@@ -29,9 +30,7 @@ texts = TRANSLATIONS[language]
 st.title(texts["page_title"])
 st.write(texts["welcome"])
 
-
 st.header(texts["upload_file"])
-
 
 uploaded_file = st.file_uploader(
     texts["supported_formats"],
@@ -50,32 +49,6 @@ if uploaded_file is not None:
 
         st.subheader(texts["data_preview"])
         st.dataframe(df)
-
-        transaction_filter = st.selectbox(
-            texts["transaction_type"],
-            options=[
-                "all",
-                "income",
-                "expense",
-            ],
-            format_func=lambda x: {
-                "all": texts["all"],
-                "income": texts["income_filter"],
-                "expense": texts["expense_filter"],
-            }[x],
-        )
-
-        filtered_df = df.copy()
-
-        if transaction_filter == "income":
-            filtered_df = filtered_df[
-                filtered_df["Type"] == "Income"
-            ]
-
-        elif transaction_filter == "expense":
-            filtered_df = filtered_df[
-                filtered_df["Type"] == "Expense"
-            ]
 
         required_columns = [
             "Date",
@@ -98,10 +71,35 @@ if uploaded_file is not None:
                 f"{texts['missing_columns']} "
                 f"{', '.join(missing_columns)}"
             )
+
         else:
             st.success(texts["valid_data"])
 
-            income, expenses, net_cash_flow = calculate_cash_flow(df)
+            transaction_filter = st.selectbox(
+                texts["transaction_type"],
+                options=["all", "income", "expense"],
+                format_func=lambda x: {
+                    "all": texts["all"],
+                    "income": texts["income_filter"],
+                    "expense": texts["expense_filter"],
+                }[x],
+            )
+
+            filtered_df = df.copy()
+
+            if transaction_filter == "income":
+                filtered_df = filtered_df[
+                    filtered_df["Type"] == "Income"
+                ]
+
+            elif transaction_filter == "expense":
+                filtered_df = filtered_df[
+                    filtered_df["Type"] == "Expense"
+                ]
+
+            income, expenses, net_cash_flow = (
+                calculate_cash_flow(filtered_df)
+            )
 
             st.subheader(texts["cash_flow"])
 
@@ -110,45 +108,46 @@ if uploaded_file is not None:
             with col1:
                 st.metric(
                     texts["income"],
-                    f"{income:,.0f}"
+                    f"{income:,.0f}",
                 )
 
             with col2:
                 st.metric(
                     texts["expenses"],
-                    f"{expenses:,.0f}"
+                    f"{expenses:,.0f}",
                 )
 
             with col3:
                 st.metric(
                     texts["net_cash_flow"],
-                    f"{net_cash_flow:,.0f}"
+                    f"{net_cash_flow:,.0f}",
                 )
 
             expenses_by_category = (
-                calculate_expenses_by_category(df)
+                calculate_expenses_by_category(filtered_df)
             )
 
-            st.subheader(
-                texts["expenses_by_category"]
-            )
+            st.subheader(texts["expenses_by_category"])
 
-            st.dataframe(expenses_by_category)
+            if expenses_by_category.empty:
+                st.info(texts["no_expenses_for_filter"])
 
-            fig = px.bar(
-                expenses_by_category,
-                x=expenses_by_category.index,
-                y=expenses_by_category.values,
-                labels={
-                    "x": texts["category"],
-                    "y": texts["amount"],
-                },
-            )
+            else:
+                st.dataframe(expenses_by_category)
 
-            st.plotly_chart(
-                fig,
-                use_container_width=True,
-            )
+                fig = px.bar(
+                    x=expenses_by_category.index,
+                    y=expenses_by_category.values,
+                    labels={
+                        "x": texts["category"],
+                        "y": texts["amount"],
+                    },
+                )
+
+                st.plotly_chart(
+                    fig,
+                    use_container_width=True,
+                )
 
     except Exception as error:
         st.error(str(error))
