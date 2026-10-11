@@ -98,7 +98,7 @@ if uploaded_file is not None:
                 ]
 
             income, expenses, net_cash_flow = (
-                calculate_cash_flow(filtered_df)
+                calculate_cash_flow(df)
             )
 
             st.subheader(texts["cash_flow"])
