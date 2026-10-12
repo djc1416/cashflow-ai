@@ -123,11 +123,30 @@ if uploaded_file is not None:
                     f"{net_cash_flow:,.0f}",
                 )
 
+
             expenses_by_category = (
                 calculate_expenses_by_category(filtered_df)
             )
 
             st.subheader(texts["expenses_by_category"])
+
+            if not expenses_by_category.empty:
+                category_options = [
+                    "all"
+                ] + expenses_by_category.index.tolist()
+
+                selected_category = st.selectbox(
+                    texts["category"],
+                    options=category_options,
+                    format_func=lambda x: (
+                       texts["all"] if x == "all" else x
+                ),
+            )
+
+            if selected_category != "all":
+                expenses_by_category = expenses_by_category.loc[
+                    [selected_category]
+                ]
 
             if expenses_by_category.empty:
                 st.info(texts["no_expenses_for_filter"])
@@ -148,6 +167,7 @@ if uploaded_file is not None:
                     fig,
                     use_container_width=True,
                 )
+
 
     except Exception as error:
         st.error(str(error))
