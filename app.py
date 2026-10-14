@@ -143,56 +143,65 @@ if uploaded_file is not None:
                 ),
             )
 
-            if selected_category != "all":
-                expenses_by_category = expenses_by_category.loc[
-                    [selected_category]
-                ]
+                if selected_category != "all":
+                    expenses_by_category = expenses_by_category.loc[
+                        [selected_category]
+                    ]   
 
-            if expenses_by_category.empty:
-                st.info(texts["no_expenses_for_filter"])
+                if expenses_by_category.empty:
+                    st.info(texts["no_expenses_for_filter"])
 
-            else:
-                st.dataframe(expenses_by_category)
+                else:
+                    st.dataframe(expenses_by_category)
 
-                fig = px.bar(
-                    x=expenses_by_category.values,
-                    y=expenses_by_category.index,
-                    orientation="h",
-                    labels={
-                        "x": texts["amount"],
-                        "y": texts["category"],
-                    },
-                    text_auto=",.0f",
-                )
+                    fig = px.bar(
+                        x=expenses_by_category.values,
+                        y=expenses_by_category.index,
+                        orientation="h",
+                        labels={
+                            "x": texts["amount"],
+                            "y": texts["category"],
+                        },
+                        text_auto=",.0f",
+                    )
 
-                fig.update_layout(
-                    height=max(
-                        300,
-                        min(550, 100 + len(expenses_by_category) * 45),
-                    ),
-                    margin=dict(l=20, r=30, t=20, b=20),
-                    showlegend=False,
-                    yaxis=dict(
-                        autorange="reversed",
-                        title=None,
-                    ),
-                    xaxis=dict(
-                        title=None,
-                        showgrid=True,
-                        zeroline=False,
-                    ),
-                )
+                    fig.update_layout(
+                        height=(
+                            200
+                            if len(expenses_by_category) == 1
+                            else max(
+                                300,
+                            min(550, 100 + len(expenses_by_category) * 45),
+                            )
+                        ),
+                        margin=dict(
+                            l=20, r=70, t=20, b=35),
+                        showlegend=False,
+                        yaxis=dict(
+                            autorange="reversed",
+                            title=None,
+                        ),
+                        xaxis=dict(
+                            title=None,
+                            showgrid=True,
+                            zeroline=False,
+                            range=[
+                                0,
+                                float(expenses_by_category.max()) * 1.25,
+                            ],
+                        ),
+                    )
 
-                fig.update_traces(
-                    marker_line_width=0,
-                    textposition="outside",
-                    cliponaxis=False,
-                )
+                    fig.update_traces(
+                        marker_line_width=0,
+                        textposition="outside",
+                        cliponaxis=False,
+                    )
 
-                st.plotly_chart(
-                    fig,
-                    use_container_width=True,
-                )
+                    st.plotly_chart(
+                        fig,
+                        use_container_width=True,
+                    )    
 
 
     except Exception as error:
