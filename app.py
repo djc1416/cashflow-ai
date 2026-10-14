@@ -155,12 +155,38 @@ if uploaded_file is not None:
                 st.dataframe(expenses_by_category)
 
                 fig = px.bar(
-                    x=expenses_by_category.index,
-                    y=expenses_by_category.values,
+                    x=expenses_by_category.values,
+                    y=expenses_by_category.index,
+                    orientation="h",
                     labels={
-                        "x": texts["category"],
-                        "y": texts["amount"],
+                        "x": texts["amount"],
+                        "y": texts["category"],
                     },
+                    text_auto=",.0f",
+                )
+
+                fig.update_layout(
+                    height=max(
+                        300,
+                        min(550, 100 + len(expenses_by_category) * 45),
+                    ),
+                    margin=dict(l=20, r=30, t=20, b=20),
+                    showlegend=False,
+                    yaxis=dict(
+                        autorange="reversed",
+                        title=None,
+                    ),
+                    xaxis=dict(
+                        title=None,
+                        showgrid=True,
+                        zeroline=False,
+                    ),
+                )
+
+                fig.update_traces(
+                    marker_line_width=0,
+                    textposition="outside",
+                    cliponaxis=False,
                 )
 
                 st.plotly_chart(
