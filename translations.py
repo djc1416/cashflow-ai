@@ -30,6 +30,8 @@ TRANSLATIONS = {
         "income_filter": "Ingresos",
         "expense_filter": "Gastos",
         "no_expenses_for_filter": "No hay datos para mostrar",
+        "expense_ratio": "Proporción de gastos",
+        "no_expense_ratio": "No disponible",
     },
 
     "en": {
@@ -63,5 +65,7 @@ TRANSLATIONS = {
         "income_filter": "Income",
         "expense_filter": "Expenses",
         "no_expenses_for_filter": "No data to display",
+        "expense_ratio": "Expense Ratio",
+        "no_expense_ratio": "Not available",
     },
 }

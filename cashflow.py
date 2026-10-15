@@ -29,4 +29,10 @@ def calculate_expenses_by_category(df):
     )
 
     return expenses_by_category    
-   
+
+
+def calculate_expense_ratio(income, expenses):
+    if income <= 0:
+        return None
+
+    return (expenses / income) * 100

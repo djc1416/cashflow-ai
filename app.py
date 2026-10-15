@@ -6,6 +6,7 @@ import streamlit as st
 from cashflow import (
     calculate_cash_flow,
     calculate_expenses_by_category,
+    calculate_expense_ratio
 )
 from translations import TRANSLATIONS
 
@@ -101,9 +102,14 @@ if uploaded_file is not None:
                 calculate_cash_flow(df)
             )
 
+            expense_ratio = calculate_expense_ratio(
+                income,
+                expenses,
+            )
+
             st.subheader(texts["cash_flow"])
 
-            col1, col2, col3 = st.columns(3)
+            col1, col2, col3 = st.columns(4)
 
             with col1:
                 st.metric(
@@ -122,6 +128,18 @@ if uploaded_file is not None:
                     texts["net_cash_flow"],
                     f"{net_cash_flow:,.0f}",
                 )
+
+            with col4:
+                expense_ratio_display = (
+                    f"{expense_ratio:.1f} %"
+                    if expense_ratio is not None
+                    else texts["no_expense_ratio"]
+                )
+
+                st.metric(
+                    texts["expense_ratio"],
+                    expense_ratio_display,
+                )    
 
 
             expenses_by_category = (
