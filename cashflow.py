@@ -36,3 +36,39 @@ def calculate_expense_ratio(income, expenses):
         return None
 
     return (expenses / income) * 100
+
+
+def calculate_monthly_cash_flow(df):
+
+    monthly_df = df.copy()
+
+    monthly_df["Date"] = pd.to_datetime(
+        monthly_df["Date"],
+        errors="coerce",
+    )
+
+    monthly_df = monthly_df.dropna(subset=["Date"])
+
+    monthly_df["Month"] = (
+          monthly_df["Date"].dt.to_period("M").astype(str)
+    )
+
+    monthly_summary = (
+        monthly_df.pivot_table(
+            index="Month",
+            columns="Type",
+            values="Amount",
+            aggfunc="sum",
+            fill_value=0      
+        )
+    )
+
+    for transaction_type in ["Income", "Expense"]:
+        if transaction_type not in monthly_summary.columns:
+            monthly_summary[transaction_type] = 0
+
+    monthly_summary["Net Cash Flow"] = (
+        monthly_summary["Income"] - monthly_summary["Expense"]
+    )
+
+    return monthly_summary.sort_index()                

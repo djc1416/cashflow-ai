@@ -32,6 +32,11 @@ TRANSLATIONS = {
         "no_expenses_for_filter": "No hay datos para mostrar",
         "expense_ratio": "Proporción de gastos",
         "no_expense_ratio": "No disponible",
+
+        "monthly_cash_flow": "Flujo de caja mensual",
+        "no_monthly_cash_flow": "No hay datos para mostrar",
+        "month": "Mes",
+        "series": "Tipo de transacción",
     },
 
     "en": {
@@ -67,5 +72,10 @@ TRANSLATIONS = {
         "no_expenses_for_filter": "No data to display",
         "expense_ratio": "Expense Ratio",
         "no_expense_ratio": "Not available",
+
+        "monthly_cash_flow": "Monthly Cash Flow",
+        "no_monthly_cash_flow": "No data to display",  
+        "month": "Month",
+        "series": "Transaction Type",
     },
 }

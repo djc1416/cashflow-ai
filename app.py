@@ -6,7 +6,8 @@ import streamlit as st
 from cashflow import (
     calculate_cash_flow,
     calculate_expenses_by_category,
-    calculate_expense_ratio
+    calculate_expense_ratio,
+    calculate_monthly_cash_flow,
 )
 from translations import TRANSLATIONS
 
@@ -219,8 +220,42 @@ if uploaded_file is not None:
                     st.plotly_chart(
                         fig,
                         use_container_width=True,
-                    )    
+                    ) 
 
+                monthly_summary = calculate_monthly_cash_flow(df)
+
+                st.subheader(
+                    texts["monthly_cash_flow"]
+                )
+
+                if monthly_summary.empty:
+                    st.info(texts["no_monthly_cash_flow"])
+
+                else:
+    
+                    monthly_fig = px.line(
+                        monthly_summary.reset_index(),
+                        x="Month",
+                        y=[
+                            "Income",
+                            "Expense",
+                            "Net Cash Flow",
+                        ],
+                        markers=True,
+                        labels={
+                            "Month": texts["month"],
+                            "value": texts["amount"],
+                            "variable": texts["series"],
+                        },
+                    )
+
+  
+                    st.plotly_chart(
+                    monthly_fig,
+                    use_container_width=True,
+                    )
+
+                    
 
     except Exception as error:
         st.error(str(error))
