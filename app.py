@@ -232,7 +232,6 @@ if uploaded_file is not None:
                     st.info(texts["no_monthly_cash_flow"])
 
                 else:
-    
                     monthly_fig = px.line(
                         monthly_summary.reset_index(),
                         x="Month",
@@ -249,6 +248,33 @@ if uploaded_file is not None:
                         },
                     )
 
+                    monthly_fig.update_layout(
+                        xaxis=dict(
+                            type="category",
+                            title=texts["month"],
+                        ),
+                        yaxis=dict(
+                            title=texts["amount"],
+                            tickformat=",.0f",
+                            rangemode="tozero",
+                        ),
+                        legend=dict(
+                            orientation="h",
+                            yanchor="bottom",
+                            y=1.02,
+                            xanchor="left",
+                            x=0,
+                        ),
+                        margin=dict(
+                            l=20, r=20, t=50, b=35),
+                        hovermode="x unified",
+                    )
+
+                    monthly_fig.update_traces(
+                        line=dict(width=3),
+                        marker=dict(size=8)
+                    )
+                        
   
                     st.plotly_chart(
                     monthly_fig,
