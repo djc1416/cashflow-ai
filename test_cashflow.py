@@ -83,3 +83,40 @@ def test_calculate_monthly_cash_flow():
     assert monthly_summary.loc["2026-10", "Income"] == 200000
     assert monthly_summary.loc["2026-10", "Expense"] == 0
     assert monthly_summary.loc["2026-10", "Net Cash Flow"] == 200000
+
+def test_monthly_cash_flow_ignores_invalid_dates():
+    df = pd.DataFrame({
+        "Date": [
+            "2026-09-01",
+            "invalid-date",
+            None,
+            
+        ],
+        "Description": [
+            "Salary",
+            "Invalid Transaction",
+            "Missing Date Transaction",
+        ],
+        "Category": [
+            "Income",
+            "Food",
+            "Bills",
+        ],
+        "Type": [
+            "Income",
+            "Expense",
+            "Expense",
+        ],
+        "Amount": [
+            800000,
+            50000, 
+            200000,
+        ],
+    })
+
+    monthly_summary = calculate_monthly_cash_flow(df)
+
+    assert list(monthly_summary.index) == ["2026-09"]
+    assert monthly_summary.loc["2026-09", "Income"] == 800000
+    assert monthly_summary.loc["2026-09", "Expense"] == 0
+    assert monthly_summary.loc["2026-09", "Net Cash Flow"] == 800000  
