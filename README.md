@@ -1,5 +1,10 @@
 # CashFlow AI
 
+[!NOTE]
+**Project Status: Temporarily Paused**
+This project is currently on standby due to time constraints and other priorities. I plan to resume development and add new features in the future.
+
+
 A bilingual financial analysis application built with Python and Streamlit.
 
 CashFlow AI aims to help users organize and analyze financial transactions through a simple and interactive interface.
