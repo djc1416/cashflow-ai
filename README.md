@@ -1,8 +1,9 @@
 # CashFlow AI
 
-[!NOTE]
-**Project Status: Temporarily Paused**
-This project is currently on standby due to time constraints and other priorities. I plan to resume development and add new features in the future.
+> [!NOTE]
+> **Project Status: Temporarily Paused**
+> This project is currently on standby due to time constraints and other priorities. I plan to resume development and add new features in the future.
+
 
 
 A bilingual financial analysis application built with Python and Streamlit.
